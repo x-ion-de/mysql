@@ -19,3 +19,4 @@ supports 'suse'
 
 depends 'yum-mysql-community'
 depends 'smf'
+depends 'dsc'
