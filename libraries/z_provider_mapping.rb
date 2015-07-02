@@ -16,7 +16,8 @@ Chef::Platform.set platform: :scientific, version: '< 7.0', resource: :mysql_ser
 Chef::Platform.set platform: :scientific, version: '>= 7.0', resource: :mysql_service, provider: Chef::Provider::MysqlService::Systemd
 Chef::Platform.set platform: :smartos, resource: :mysql_service, provider: Chef::Provider::MysqlService::Smf
 Chef::Platform.set platform: :suse, resource: :mysql_service, provider: Chef::Provider::MysqlService::Sysvinit
-Chef::Platform.set platform: :ubuntu, resource: :mysql_service, provider: Chef::Provider::MysqlService::Upstart
+Chef::Platform.set platform: :ubuntu, version: '< 15.04', resource: :mysql_service, provider: Chef::Provider::MysqlService::Upstart
+Chef::Platform.set platform: :ubuntu, version: '>= 15.04', resource: :mysql_service, provider: Chef::Provider::MysqlService::Systemd
 
 #########
 # config

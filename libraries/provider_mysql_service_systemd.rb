@@ -3,6 +3,9 @@ class Chef
     class MysqlService
       class Systemd < Chef::Provider::MysqlService
         action :start do
+	  # need directory for Ubuntu
+	  directory '/usr/libexec'
+
           # this script is called by the main systemd unit file, and
           # spins around until the service is actually up and running.
           template "#{new_resource.name} :start /usr/libexec/#{mysql_name}-wait-ready" do
@@ -17,8 +20,8 @@ class Chef
           end
 
           # this is the main systemd unit file
-          template "#{new_resource.name} :start /usr/lib/systemd/system/#{mysql_name}.service" do
-            path "/usr/lib/systemd/system/#{mysql_name}.service"
+          template "#{new_resource.name} :start /lib/systemd/system/#{mysql_name}.service" do
+            path "/lib/systemd/system/#{mysql_name}.service"
             source 'systemd/mysqld.service.erb'
             owner 'root'
             group 'root'
@@ -36,7 +39,7 @@ class Chef
 
           # avoid 'Unit file changed on disk' warning
           execute "#{new_resource.name} :start systemctl daemon-reload" do
-            command '/usr/bin/systemctl daemon-reload'
+            command '/bin/systemctl daemon-reload'
             action :nothing
           end
 
